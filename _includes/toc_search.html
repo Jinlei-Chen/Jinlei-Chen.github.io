@@ -1,0 +1,55 @@
+{% if page.layout == 'post' %}
+<style>
+#toc-wrap {
+  position: fixed;
+  right: 1rem;
+  top: 100px;
+  width: 220px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 0.9rem;
+  z-index: 999;
+}
+#toc-wrap ul { list-style: none; padding-left: 1em; margin: 0; }
+#toc-wrap li a { text-decoration: none; color: #0366d6; }
+#toc-wrap li a:hover { text-decoration: underline; }
+#searchInput { width: 100%; margin-bottom: 8px; padding: 4px 6px; }
+@media (max-width: 1024px){ #toc-wrap { display: none; } }
+</style>
+
+<div id="toc-wrap">
+  <input id="searchInput" placeholder="搜索本文…" autocomplete="off"/>
+  <nav id="toc-nav"></nav>
+</div>
+
+<script>
+(function(){
+  const article = document.querySelector('.post-content, article');
+  if (!article) return;
+
+  // 生成 TOC
+  const nav = document.getElementById('toc-nav');
+  const ul = document.createElement('ul');
+  article.querySelectorAll('h1,h2,h3').forEach((h,i)=>{
+    const id = h.id || (h.id = 'h-' + i);
+    const li = document.createElement('li');
+    li.style.marginLeft = (h.tagName[1]-1)*12 + 'px';
+    li.innerHTML = `<a href="#${id}">${h.textContent}</a>`;
+    ul.appendChild(li);
+  });
+  nav.appendChild(ul);
+
+  // 搜索过滤
+  document.getElementById('searchInput').addEventListener('input', e=>{
+    const k = e.target.value.toLowerCase();
+    article.querySelectorAll('h1,h2,h3,p,li,blockquote').forEach(n=>{
+      n.style.display = (k === '' || n.textContent.toLowerCase().includes(k)) ? '' : 'none';
+    });
+  });
+})();
+</script>
+{% endif %}
