@@ -3,7 +3,8 @@ layout: post
 title: new和malloc使用和差异
 date: 2025-11-11 08:00:00 +0800
 ---
-# new和malloc使用和差异
+<!--more-->
+
 ## new和malloc基本介绍
 ### malloc 介绍
 #### 功能
@@ -606,3 +607,4 @@ delete ptr2;  // 错误！应该使用 free
 ## 总结
 
 总的来说，new 是 C++ 的标准运算符，用于分配和初始化对象，而 malloc 是 C 语言的库函数，用于分配内存。new 的主要优点是会自动调用构造函数，而 malloc 则不会。但是，malloc 的主要优点是它允许我们分配任意大小的内存，而 new 只允许分配指定类型的内存。
+
